@@ -9,5 +9,7 @@ jobs:
       env:
         MB_PYTHON_VERSION: 3.7
     steps:
+      - name: debug workspace
+        run: find /github/
       - name: run the build script
         run: /github/workspace/build-linux-wheels.sh 3.7
