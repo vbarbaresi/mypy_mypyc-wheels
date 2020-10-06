@@ -10,5 +10,5 @@ jobs:
       - name: run the build script
         uses: docker://quay.io/pypa/manylinux1_x86_64
         with:
-          entrypoint: $GITHUB_WORKSPACE/build-linux-wheels.sh
+          entrypoint: /github/workspace/build-linux-wheels.sh
           args: 3.7
