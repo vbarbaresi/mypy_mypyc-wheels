@@ -2,6 +2,7 @@ on: [push]
 
 jobs:
   build_wheel:
+    runs-on: ubuntu-latest
     name: Build & Release mypyc wheels
     container:
       image: quay.io/pypa/manylinux1_x86_64
