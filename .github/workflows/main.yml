@@ -4,12 +4,11 @@ jobs:
   build_wheel:
     runs-on: ubuntu-latest
     name: Build & Release mypyc wheels
-    container:
-      image: quay.io/pypa/manylinux1_x86_64
-      env:
-        MB_PYTHON_VERSION: 3.7
     steps:
       - name: checkout
         uses: actions/checkout@v2
       - name: run the build script
-        run: $GITHUB_WORKSPACE/build-linux-wheels.sh 3.7
+        run: docker://quay.io/pypa/manylinux1_x86_64
+        with:
+          entrypoint: $GITHUB_WORKSPACE/build-linux-wheels.sh
+          args: 3.7
