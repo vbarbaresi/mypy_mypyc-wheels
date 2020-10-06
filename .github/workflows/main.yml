@@ -7,6 +7,6 @@ jobs:
       image: quay.io/pypa/manylinux1_x86_64
       env:
         MB_PYTHON_VERSION: 3.7
-      steps:
-        - name: run the build script
-          run: /github/workspace/io/build-linux-wheels.sh 3.7
+    steps:
+      - name: run the build script
+        run: /github/workspace/io/build-linux-wheels.sh 3.7
