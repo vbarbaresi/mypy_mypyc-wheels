@@ -1,0 +1,16 @@
+on: [push]
+
+jobs:
+  build_wheel:
+    runs-on: ubuntu-latest
+    name: Build & Release mypyc wheels
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: run the build script
+        uses: docker://quay.io/pypa/manylinux1_x86_64
+        with:
+          entrypoint: ./build-linux-wheels.sh
+          args: 3.7

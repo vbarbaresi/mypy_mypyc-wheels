@@ -1,5 +1,10 @@
 #!/bin/bash -eux
 
+if [ ! -z "$GITHUB_WORKSPACE" ]; then
+  # Running in Github Workflows
+  ln -s $GITHUB_WORKSPACE /io;
+fi
+
 # Unpack a modern clang version
 (cd / && curl -L https://github.com/mypyc/mypy_mypyc-wheels/releases/download/llvm/llvm-centos-5.tar.gz | tar xzf -)
 
