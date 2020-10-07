@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build & Release mypyc wheels
     strategy:
+      fail-fast: false
       matrix:
         python_version: [ 3.5, 3.6, 3.7, 3.8 ]
     steps:
