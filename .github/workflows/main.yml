@@ -12,5 +12,5 @@ jobs:
       - name: run the build script
         uses: docker://quay.io/pypa/manylinux1_x86_64
         with:
-          entrypoint: /io/build-linux-wheels.sh
+          entrypoint: ./build-linux-wheels.sh
           args: 3.7
