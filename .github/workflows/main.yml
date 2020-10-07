@@ -4,6 +4,9 @@ jobs:
   build_wheel:
     runs-on: ubuntu-latest
     name: Build & Release mypyc wheels
+    strategy:
+      matrix:
+        python_version: [ 3.5, 3.6, 3.7, 3.8 ]
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -13,4 +16,36 @@ jobs:
         uses: docker://quay.io/pypa/manylinux1_x86_64
         with:
           entrypoint: ./build-linux-wheels.sh
-          args: 3.7
+          args: ${{ matrix.python_version }}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release assets
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const path = require('path');
+            const fs = require('fs');
+            const release_id = '${{ needs.create_release.outputs.id }}';
+            for (let file of await fs.readdirSync('./')) {
+              if (path.extname(file) === '.whl') {
+                console.log('uploadReleaseAsset', file);
+                await github.repos.uploadReleaseAsset({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  release_id: release_id,
+                  name: file,
+                  data: await fs.readFileSync(`./${file}`)
+                });
+              }
+            }
