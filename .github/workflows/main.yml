@@ -14,5 +14,5 @@ jobs:
         with:
           entrypoint: /io/build-linux-wheels.sh
           args: 3.7
-          volumes:
-            - $GITHUB_WORKSPACE:/io/
+        volumes:
+          - $GITHUB_WORKSPACE:/io/
