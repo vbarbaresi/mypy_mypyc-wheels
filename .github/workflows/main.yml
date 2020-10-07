@@ -7,8 +7,12 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: run the build script
         uses: docker://quay.io/pypa/manylinux1_x86_64
         with:
-          entrypoint: ./build-linux-wheels.sh
+          entrypoint: /io/build-linux-wheels.sh
           args: 3.7
+          volumes:
+            - $GITHUB_WORKSPACE:/io/
