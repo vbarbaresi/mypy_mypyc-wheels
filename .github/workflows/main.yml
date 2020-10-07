@@ -14,7 +14,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: ${{ github.ref }}
           draft: false
           prerelease: false
   build_wheel:
@@ -43,7 +43,7 @@ jobs:
             const path = require('path');
             const fs = require('fs');
             const release_id = '${{ needs.create_release.outputs.id }}';
-            for (let file of await fs.readdirSync('.')) {
+            for (let file of await fs.readdirSync('/io/wheelhouse/')) {
               if (path.extname(file) === '.whl') {
                 console.log('uploadReleaseAsset', file);
                 await github.repos.uploadReleaseAsset({
