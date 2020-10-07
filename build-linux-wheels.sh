@@ -1,8 +1,8 @@
 #!/bin/bash -eux
 
-if [ ! -z "$GITHUB_WORKSPACE" ];
-# Running in Github Workflows
-then ln -s $GITHUB_WORKSPACE /io;
+if [ ! -z "$GITHUB_WORKSPACE" ]; then
+  # Running in Github Workflows
+  ln -s $GITHUB_WORKSPACE /io;
 fi
 
 # Unpack a modern clang version
