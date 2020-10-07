@@ -1,6 +1,21 @@
-on: [push]
+on:
+  push:
+    tags:
+    - '*'
 
 jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    name: Create Release
+    id: create_release
+    uses: actions/create-release@v1
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    with:
+      tag_name: ${{ github.ref }}
+      release_name: Release ${{ github.ref }}
+      draft: false
+      prerelease: false
   build_wheel:
     runs-on: ubuntu-latest
     name: Build & Release mypyc wheels
@@ -18,17 +33,6 @@ jobs:
         with:
           entrypoint: ./build-linux-wheels.sh
           args: ${{ matrix.python_version }}
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
 
       - name: Upload Release assets
         uses: actions/github-script@v3
