@@ -5,8 +5,8 @@ on:
 
 jobs:
   create_release:
-    runs-on: ubuntu-latest
     name: Create Release
+    runs-on: ubuntu-latest
     steps:
       - name: create_release
         uses: actions/create-release@v1
@@ -17,9 +17,11 @@ jobs:
           release_name: ${{ github.ref }}
           draft: false
           prerelease: false
+
   build_wheel:
-    runs-on: ubuntu-latest
     name: Build & Release mypyc wheels
+    runs-on: ubuntu-latest
+    needs: create_release
     strategy:
       fail-fast: false
       matrix:
@@ -38,7 +40,7 @@ jobs:
       - name: Upload Release assets
         uses: actions/github-script@v3
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           # JS script to workaround this issue:
           # https://github.com/actions/upload-release-asset/issues/47
           # Release all wheels built in wheelhouse/*.whl
