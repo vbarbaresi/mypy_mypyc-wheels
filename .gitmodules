@@ -3,4 +3,4 @@
 	url = https://github.com/matthew-brett/multibuild
 [submodule "mypy"]
 	path = mypy
-	url = https://github.com/python/mypy
+	url = git@github.com:vbarbaresi/mypy.git
